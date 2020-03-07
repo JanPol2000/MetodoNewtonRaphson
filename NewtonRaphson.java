@@ -6,12 +6,15 @@ public class NewtonRaphson{
    
    public static void main(String args[]){
       Scanner in = new Scanner(System.in);
-      System.out.print("Ingresa la opc: ");
+      /*System.out.print("Ingresalos coeficientes: ");
       int opc = in.nextInt();
       double a[] = in_extra(opc);
       for(double c: a){
          System.out.println(c);
-      }
+      }*/
+      
+      double r = cal_exp(2,4,2);
+      System.out.println(r);
    }
    
    
@@ -69,6 +72,7 @@ public class NewtonRaphson{
          resultado += coef[1] * x + coef[0];
       } else
          resultado += coef[0];
+         
       switch(opc){
          case 1:
             if(coef_extra[0] != 0)
@@ -82,6 +86,5 @@ public class NewtonRaphson{
       if(coef_extra[2] != 0)
          resultado += coef_extra[2] * Math.exp(coef_extra[3] * x);
       return resultado;
-   }
-   
+   }  
 }
