@@ -108,7 +108,7 @@ public class NewtonRaphson{
    static void error(double x, int grado, int opc, int opc_err){
       Scanner in = new Scanner(System.in);
       double e_a = 0, e_s = 1;
-      int it = 0, i = 0;
+      int it = 0, i = 0, cifras = 0;
       double x_Ant = x, x_Actual;
       
       switch(opc_err){
@@ -118,7 +118,7 @@ public class NewtonRaphson{
             break;
          case 2:
             System.out.print("Ingresa las cifras significativas: ");
-            double cifras = in.nextDouble();
+            cifras = in.nextInt();
             e_s = 0.5 * Math.pow(10, 2 - cifras);
             break;
          case 3:
@@ -126,8 +126,8 @@ public class NewtonRaphson{
             it = in.nextInt();
             break;
       }
-       System.out.printf("| %10s| %22s | %22s | %22s |\n", "x", "f(x)", "f'(x)", "Ea");
-       System.out.printf("----------------------------------------------------------------------------------------\n");           
+      System.out.printf("| %10s| %22s | %22s | %22s |\n", "x", "f(x)", "f'(x)", "Ea");
+      System.out.printf("----------------------------------------------------------------------------------------\n");           
       do{
          x_Actual = newton_raphson(x_Ant, grado, opc);
          if(opc_err != 3)
@@ -137,14 +137,44 @@ public class NewtonRaphson{
          i++;
       }while(!(e_a < e_s) || i < it);
       if(opc_err == 2){
-      System.out.println("Raiz = " + x_Ant);
+         cifras_sig(x_Ant, cifras);
       }
-            //IMPRIMIR
       else
          System.out.println("Raiz = " + x_Ant);
    }
    
-   static double cifras_sig(double r, int cifras){
-   return 0;
+   static void cifras_sig(double r, int cifras){
+      String cadena = Double.toString(r);
+      boolean neg = false;
+      if(cadena.startsWith("-")){
+         cadena = cadena.substring(1);
+         neg = true;
+      }
+      if(cadena.startsWith("0"))
+         if(neg)
+            System.out.printf("Raiz =  -%." + cifras + "f\n", r);
+         else
+            System.out.printf("Raiz =  %." + cifras + "f\n", r);
+         
+      int index_Punto = cadena.indexOf(".");
+      if(index_Punto != -1){
+         int c_falta = cifras - index_Punto;
+         if(neg)
+            System.out.printf("-%." + c_falta + "f\n", r);
+         else
+            System.out.printf("%." + c_falta + "f\n", r);
+      }
+      else
+         if(cadena.charAt(cifras) >= '5' || cadena.charAt(cifras) == '.' && cadena.charAt(cifras + 1) >= 5){
+            if(neg)
+               System.out.println("-" + (Integer.parseInt(cadena) + 1));
+            else
+               System.out.println("-" + (Integer.parseInt(cadena) + 1));
+         } else{
+            if(neg)
+               System.out.println("-" + cadena);
+            else
+               System.out.println(cadena);
+         }
    }
 }
