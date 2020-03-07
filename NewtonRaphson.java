@@ -20,6 +20,8 @@ public class NewtonRaphson{
       System.out.println(d);
       double n = newton_raphson(2,2,1);
       System.out.println(n);
+      
+      error(2,2,1,2);
    }
    
    
@@ -124,18 +126,25 @@ public class NewtonRaphson{
             it = in.nextInt();
             break;
       }
-                  
+       System.out.printf("| %10s| %22s | %22s | %22s |\n", "x", "f(x)", "f'(x)", "Ea");
+       System.out.printf("----------------------------------------------------------------------------------------\n");           
       do{
          x_Actual = newton_raphson(x_Ant, grado, opc);
          if(opc_err != 3)
             e_a = Math.abs((x_Actual - x_Ant) / x_Actual);
-         System.out.printf("| %10.6f| %10.6 | %10.6 | %10.6 |\n", x_Ant, cal_exp(x_Ant, grado, opc), derivada(x_Ant, grado, opc), e_a);
+         System.out.printf("| %10.6f| %22.6f | %22.6f | %22.6f |\n", x_Ant, cal_exp(x_Ant, grado, opc), derivada(x_Ant, grado, opc), e_a);
          x_Ant = x_Actual;
          i++;
       }while(!(e_a < e_s) || i < it);
-      if(opc_err == 2){}
+      if(opc_err == 2){
+      System.out.println("Raiz = " + x_Ant);
+      }
             //IMPRIMIR
       else
-         System.out.println("Resultado = " + x_Actual);
+         System.out.println("Raiz = " + x_Ant);
+   }
+   
+   static double cifras_sig(double r, int cifras){
+   return 0;
    }
 }
