@@ -20,8 +20,8 @@ public class NewtonRaphson{
       System.out.println(d);
       double n = newton_raphson(2,2,1);
       System.out.println(n);
-      
-      error(2,2,1,2);
+      //error(2,2,1,2);
+      cifras_sig(-1,3);
    }
    
    
@@ -143,38 +143,36 @@ public class NewtonRaphson{
          System.out.println("Raiz = " + x_Ant);
    }
    
-   static void cifras_sig(double r, int cifras){
-      String cadena = Double.toString(r);
+   static void cifras_sig(double x, int cifras){
+      String cadena = Double.toString(x);
       boolean neg = false;
       if(cadena.startsWith("-")){
          cadena = cadena.substring(1);
          neg = true;
-      }
-      if(cadena.startsWith("0"))
-         if(neg)
-            System.out.printf("Raiz =  -%." + cifras + "f\n", r);
-         else
-            System.out.printf("Raiz =  %." + cifras + "f\n", r);
-         
-      int index_Punto = cadena.indexOf(".");
-      if(index_Punto != -1){
-         int c_falta = cifras - index_Punto;
-         if(neg)
-            System.out.printf("-%." + c_falta + "f\n", r);
-         else
-            System.out.printf("%." + c_falta + "f\n", r);
-      }
-      else
-         if(cadena.charAt(cifras) >= '5' || cadena.charAt(cifras) == '.' && cadena.charAt(cifras + 1) >= 5){
-            if(neg)
-               System.out.println("-" + (Integer.parseInt(cadena) + 1));
-            else
-               System.out.println("-" + (Integer.parseInt(cadena) + 1));
-         } else{
-            if(neg)
-               System.out.println("-" + cadena);
-            else
-               System.out.println(cadena);
          }
+      if(cadena.startsWith("0"))
+         System.out.printf("Resultado: %." + cifras + "f \n", x);
+      else{
+         String subcadena = cadena.substring(0, cifras);
+         int index_Punto = subcadena.indexOf(".");
+         if(index_Punto != -1){
+            int c_Falta = cifras - index_Punto;
+            System.out.printf("Resultado: %." + c_Falta + "f \n", x);
+         }
+         else
+            if(cadena.charAt(cifras) >= '5' 
+               || (cadena.charAt(cifras) == '.' && cadena.charAt(cifras + 1) >= '5')){
+               if(neg)
+                  System.out.println("Resultado: -" + (Integer.parseInt(subcadena) + 1));
+               else
+                  System.out.println("Resultado: " + (Integer.parseInt(subcadena) + 1));
+            }
+            else{
+               if(neg)
+                  System.out.println("Resultado: -" + subcadena);
+               else
+                  System.out.println("Resultado: " + subcadena);
+            }
+      }
    }
 }
