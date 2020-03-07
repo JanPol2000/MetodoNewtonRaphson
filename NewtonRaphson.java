@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class NewtonRaphson{
-   static double coef[];
-   static double coef_extra[];
+   static double coef[] = {-5,-3,4};
+   static double coef_extra[] = {-2,3,-2,3};
    
    
    public static void main(String args[]){
@@ -13,8 +13,10 @@ public class NewtonRaphson{
          System.out.println(c);
       }*/
       
-      double r = cal_exp(2,4,2);
+      double r = cal_exp(2,2,1);
       System.out.println(r);
+      double d = derivada(2,0.000001,2,1);
+      System.out.println(d);
    }
    
    
@@ -85,6 +87,11 @@ public class NewtonRaphson{
       }
       if(coef_extra[2] != 0)
          resultado += coef_extra[2] * Math.exp(coef_extra[3] * x);
+      return resultado;
+   }
+   
+   static double derivada(double x, double dx, int grado, int opc){
+      double resultado = (cal_exp(x + dx, grado, opc) - cal_exp(x, grado, opc)) / dx;
       return resultado;
    }  
 }
