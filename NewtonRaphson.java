@@ -1,27 +1,55 @@
 import java.util.Scanner;
 public class NewtonRaphson{
-   static double coef[] = {-5,-3,4};
-   static double coef_extra[] = {-2,3,-2,3};
+   static double coef[];
+   static double coef_extra[];
    static double dx = 0.00001;
    
    
    public static void main(String args[]){
       Scanner in = new Scanner(System.in);
-      /*System.out.print("Ingresalos coeficientes: ");
-      int opc = in.nextInt();
-      double a[] = in_extra(opc);
-      for(double c: a){
-         System.out.println(c);
-      }*/
+      int o = 0;
+      double x;
       
-      double r = cal_exp(2,2,1);
-      System.out.println(r);
-      double d = derivada(2,2,1);
-      System.out.println(d);
-      double n = newton_raphson(2,2,1);
-      System.out.println(n);
-      //error(2,2,1,2);
-      cifras_sig(-1,3);
+      do{
+         try{
+            System.out.print("[1] Sacar raiz \n[0] Salir\nOpcion: ");
+            o = in.nextInt();
+            switch(o){
+               case 1: 
+                  System.out.print("Ingresa el grado: ");
+                  int grado = in.nextInt();
+                  if(grado >= 0){
+                     coef = in_polinomio(grado);
+                     System.out.print("[1] seno y exponencial \n[2] coseno y exponencial\nOpcion: ");
+                     int opc = in.nextInt();
+                     if(opc == 1 || opc == 2){
+                        coef_extra = in_extra(opc);
+                        System.out.print("x = ");
+                        x = in.nextDouble();
+                        System.out.print("[1] Ea \n[2] Cifras Significativas \n[3] Numero maximo de iteraciones \nOpcion: ");
+                        int opc_err = in.nextInt();
+                        if(opc_err >=1 && opc_err <= 3){
+                           error(x, grado, opc, opc_err);
+                        } else
+                           System.out.println("Opcion no encontrada");
+                     } else
+                        System.out.println("Opcion no encontrada");
+                  } else
+                     System.out.println("No grados negativos");
+                  break;
+               case 0: 
+                  System.out.println("Adios");
+                  break;
+               default: 
+                  System.out.println("Opcion no valida");
+                  break;
+            }
+         }catch(Exception e){
+            System.out.println("Solo numeros");
+            in.nextLine();
+         }
+      }while(o != 0);
+      
    }
    
    
@@ -149,23 +177,23 @@ public class NewtonRaphson{
       if(cadena.startsWith("-")){
          cadena = cadena.substring(1);
          neg = true;
-         }
+      }
       if(cadena.startsWith("0"))
-         System.out.printf("Resultado: %." + cifras + "f \n", x);
+         System.out.printf("Raiz: %." + cifras + "f \n", x);
       else{
          String subcadena = cadena.substring(0, cifras);
          int index_Punto = subcadena.indexOf(".");
          if(index_Punto != -1){
             int c_Falta = cifras - index_Punto;
-            System.out.printf("Resultado: %." + c_Falta + "f \n", x);
+            System.out.printf("Raiz: %." + c_Falta + "f \n", x);
          }
          else
             if(cadena.charAt(cifras) >= '5' 
                || (cadena.charAt(cifras) == '.' && cadena.charAt(cifras + 1) >= '5')){
                if(neg)
-                  System.out.println("Resultado: -" + (Integer.parseInt(subcadena) + 1));
+                  System.out.println("Raiz: -" + (Integer.parseInt(subcadena) + 1));
                else
-                  System.out.println("Resultado: " + (Integer.parseInt(subcadena) + 1));
+                  System.out.println("Raiz: " + (Integer.parseInt(subcadena) + 1));
             }
             else{
                if(neg)
