@@ -2,6 +2,7 @@ import java.util.Scanner;
 public class NewtonRaphson{
    static double coef[] = {-5,-3,4};
    static double coef_extra[] = {-2,3,-2,3};
+   static double dx = 0.00001;
    
    
    public static void main(String args[]){
@@ -15,8 +16,10 @@ public class NewtonRaphson{
       
       double r = cal_exp(2,2,1);
       System.out.println(r);
-      double d = derivada(2,0.000001,2,1);
+      double d = derivada(2,2,1);
       System.out.println(d);
+      double n = newton_raphson(2,2,1);
+      System.out.println(n);
    }
    
    
@@ -90,8 +93,49 @@ public class NewtonRaphson{
       return resultado;
    }
    
-   static double derivada(double x, double dx, int grado, int opc){
+   static double derivada(double x, int grado, int opc){
       double resultado = (cal_exp(x + dx, grado, opc) - cal_exp(x, grado, opc)) / dx;
       return resultado;
    }  
+   
+   static double newton_raphson(double x, int grado, int opc){
+      double resultado = x - (cal_exp(x, grado, opc) / derivada(x, grado, opc));
+      return resultado;
+   }
+   
+   static void error(double x, int grado, int opc, int opc_err){
+      Scanner in = new Scanner(System.in);
+      double e_a = 0, e_s = 1;
+      int it = 0, i = 0;
+      double x_Ant = x, x_Actual;
+      
+      switch(opc_err){
+         case 1: 
+            System.out.print("Ingresa el Ea: ");
+            e_s = in.nextDouble();
+            break;
+         case 2:
+            System.out.print("Ingresa las cifras significativas: ");
+            double cifras = in.nextDouble();
+            e_s = 0.5 * Math.pow(10, 2 - cifras);
+            break;
+         case 3:
+            System.out.print("Ingresa el numero maximo de iteraciones: ");
+            it = in.nextInt();
+            break;
+      }
+                  
+      do{
+         x_Actual = newton_raphson(x_Ant, grado, opc);
+         if(opc_err != 3)
+            e_a = Math.abs((x_Actual - x_Ant) / x_Actual);
+         System.out.printf("| %10.6f| %10.6 | %10.6 | %10.6 |\n", x_Ant, cal_exp(x_Ant, grado, opc), derivada(x_Ant, grado, opc), e_a);
+         x_Ant = x_Actual;
+         i++;
+      }while(!(e_a < e_s) || i < it);
+      if(opc_err == 2){}
+            //IMPRIMIR
+      else
+         System.out.println("Resultado = " + x_Actual);
+   }
 }
