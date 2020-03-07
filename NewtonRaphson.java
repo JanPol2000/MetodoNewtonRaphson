@@ -6,9 +6,9 @@ public class NewtonRaphson{
    
    public static void main(String args[]){
       Scanner in = new Scanner(System.in);
-      System.out.print("Ingresa el grado: ");
-      int grado = in.nextInt();
-      double a[] = in_polinomio(grado);
+      System.out.print("Ingresa la opc: ");
+      int opc = in.nextInt();
+      double a[] = in_extra(opc);
       for(double c: a){
          System.out.println(c);
       }
@@ -44,7 +44,7 @@ public class NewtonRaphson{
             }
             break;
          case 2: 
-            System.out.print("asen(bx), a = ");
+            System.out.print("acos(bx), a = ");
             coef_extra[0] = in.nextDouble();
             if(coef_extra[0] != 0){
                System.out.print(coef_extra[0] + "cos(bx), b = ");
@@ -53,12 +53,12 @@ public class NewtonRaphson{
             break;
       }
       System.out.print("ae^(bx), a = ");
-            coef_extra[2] = in.nextDouble();
-            if(coef_extra[2] != 0){
-               System.out.print(coef_extra[0] + "e^2(bx), b = ");
-               coef_extra[3] = in.nextDouble();
-            }
-            return coef_extra;
+      coef_extra[2] = in.nextDouble();
+      if(coef_extra[2] != 0){
+         System.out.print(coef_extra[2] + "e^2(bx), b = ");
+         coef_extra[3] = in.nextDouble();
+      }
+      return coef_extra;
    }
    
 }
