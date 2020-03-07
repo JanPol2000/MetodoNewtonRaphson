@@ -61,4 +61,27 @@ public class NewtonRaphson{
       return coef_extra;
    }
    
+   static double cal_exp(double x, int grado, int opc){
+      double resultado = 0;
+      if(grado != 0){
+         for(int i = grado; i > 1; i--)
+            resultado += coef[i] * Math.pow(x, i);
+         resultado += coef[1] * x + coef[0];
+      } else
+         resultado += coef[0];
+      switch(opc){
+         case 1:
+            if(coef_extra[0] != 0)
+               resultado += coef_extra[0] * Math.sin(coef_extra[1] * x);
+            break;
+         case 2:
+            if(coef_extra[0] != 0)
+               resultado += coef_extra[0] * Math.cos(coef_extra[1] * x);
+            break;
+      }
+      if(coef_extra[2] != 0)
+         resultado += coef_extra[2] * Math.exp(coef_extra[3] * x);
+      return resultado;
+   }
+   
 }
